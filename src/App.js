@@ -1,38 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import AnswerButton from './AnswerButton'
 
-class App extends React.Component{
+class Game extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state = {date: new Date(), clicked:"false"};
-    this.addOne=this.addOne.bind(this)
+    this.state = {dogs:[]};
+    this.handleClick=this.handleClick.bind(this)
   }
 
   render(){
 
-    // return(
-    //   <div>
-    //     <h1>Hello, world!</h1>
-    //     <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-    //   </div>
-    // )
-
-
-
-    return (
-      <div>
-        <button onClick={this.addOne} >
-          click me
-        </button>
-        <br/>
-        clicked: {this.state.clicked}
-      </div>
+    return(
+        <div>
+          <img src={this.state.image}/>
+          <AnswerButton handleClick={this.handleClick} text="testing"/>
+          {this.state.dogs.map(d=> <div>{d}</div>)}
+        </div>
       )
 
 
+    // return (
+    //   <div>
+    //     <button onClick={this.handleClick} >
+    //       click me
+    //     </button>
+    //     <br/>
+    //     clicked: {this.state.clicked}
+    //   </div>
+    //   )
 
+
+
+
+  
+    //this is the example code i dont want to lose it just yet
 
     // return (
     //   <div className="App">
@@ -56,19 +60,25 @@ class App extends React.Component{
 
     // );
   }
-  // componentDidMount() {
-  //   this.timerID = setInterval(
-  //     () => this.tick(),
-  //     1000
-  //   );
-  // }
 
-  tick() {
-    this.setState({
-      date: new Date()
-    });
+  componentDidMount(){
+    fetch("https://dog.ceo/api/breeds/list/all")
+    .then(res => res.json())
+    .then(result => {
+      let dogJson=result.message
+      let dogList=[]
+      for (var dog in dogJson){
+        dogList.push(dog)
+      }
+      this.setState({dogs:dogList})
+      
+    })
+
+
   }
-  addOne(){
+
+
+  handleClick(){
     console.log("here")
     this.setState({
       clicked: "true"
@@ -77,16 +87,5 @@ class App extends React.Component{
 }
   
 
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, world!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-  return element
-}
 
-
-
-export default App;
+export default Game;
