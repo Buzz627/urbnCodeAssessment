@@ -15,19 +15,27 @@ class Game extends React.Component{
   }
 
   render(){
+    if (!this.state.error){
 
-    return(
-        <div>
-          <Score correct={this.state.correct} incorrect={this.state.incorrect}/>
-          <img className="dogPic" src={this.state.picture}/>
-          <br/>
-          {this.state.answers.map(name=> <AnswerButton key={name} handleClick={this.handleClick} text={name}/>)}
-          {this.showGif()}
-        </div>
+        return(
+          <div>
+            <Score correct={this.state.correct} incorrect={this.state.incorrect}/>
+            <img className="dogPic" src={this.state.picture}/>
+            <br/>
+            {this.state.answers.map(name=> <AnswerButton key={name} handleClick={this.handleClick} text={name}/>)}
+            {this.showGif()}
+          </div>
+        )
+    }
+    else{
+      return (
+        <p>Sorry, something went wrong try to reload the page</p>
       )
+    }
   }
 
   componentDidMount(){
+    //inital dog picture and list of breeds
     fetch("https://dog.ceo/api/breeds/list/all")
     .then(res => res.json())
     .then(result => {
@@ -41,10 +49,11 @@ class Game extends React.Component{
       this.getNewPicture()
       
       
-    })
+    }).catch(()=>this.setState({error:true}))
 
   }
 
+  //pick a random dog breed and get a picture of it. 
   getNewPicture(){
     var currentDog=this.getRandomDogName()
     this.setState({currentDog:currentDog})
@@ -54,6 +63,7 @@ class Game extends React.Component{
         this.setState({picture:pictureResult.message})
         this.answerButtons()
       })
+    .catch(()=>this.setState({error:true}))
 
 
   }
@@ -103,8 +113,10 @@ class Game extends React.Component{
   }
 
   getGif(value){
-    fetch('https://yesno.wtf/api/?force='+value).then(res => res.json()).then(result => this.setState({"answerGif":result.image}))
-
+    fetch('https://yesno.wtf/api/?force='+value)
+    .then(res => res.json())
+    .then(result => this.setState({"answerGif":result.image}))
+    .catch(()=>this.setState({error:true}))
   }
 
   showGif(){
