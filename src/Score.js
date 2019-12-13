@@ -9,9 +9,12 @@ class Score extends React.Component{
 
 	render(){
 		return(
-			<p>
-				Correct: {this.props.correct} Incorrect: {this.props.incorrect}
-			</p>
+			<div>
+				<h1>What kind of dog is this?</h1>
+				<p>
+					Correct: {this.props.correct} Incorrect: {this.props.incorrect}
+				</p>
+			</div>
 		)
 	}
 

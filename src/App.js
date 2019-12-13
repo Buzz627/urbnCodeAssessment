@@ -58,20 +58,21 @@ class Game extends React.Component{
 
   }
 
-  answerButtons(){
 
+  answerButtons(){
+    //I want to make sure that the currentDog is not used at all in the wrong answers
     var answers=[
           this.state.currentDog,
-          this.getRandomDogName(),
-          this.getRandomDogName(),
-          this.getRandomDogName()
+          this.getRandomDogName(this.state.currentDog),
+          this.getRandomDogName(this.state.currentDog),
+          this.getRandomDogName(this.state.currentDog)
     ];
     shuffle(answers);
     this.setState({answers:answers})
 
   }
 
-
+  //button handler for all the buttons.
   handleClick(event){
     console.log(event.target)
 
@@ -115,6 +116,7 @@ class Game extends React.Component{
 
 
   getRandomDogName(dontUse=""){
+    //make sure not to use a certain dog name
       var dog=dontUse;
       while (dog == dontUse){
         var i=Math.floor(Math.random()* this.state.dogs.length)

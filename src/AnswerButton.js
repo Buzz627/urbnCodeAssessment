@@ -9,8 +9,6 @@ class Button extends React.Component{
 			text:this.props.text,
 			value:this.props.value
 		})
-		// this.state = ;
-		// this.handleClick=this.handleClick.bind(this)
 	}
 
 	render(){
