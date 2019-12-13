@@ -28,7 +28,10 @@
   color: #61dafb;
 }
 
-
+.dogPic {
+  max-height: 400px;
+  max-width: 50%;
+}
 
 @keyframes App-logo-spin {
   from {

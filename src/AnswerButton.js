@@ -5,17 +5,25 @@ class Button extends React.Component{
 
 	constructor(props) {
 		super(props);
-		this.state = {
+		this.setState({
 			text:this.props.text,
 			value:this.props.value
-		};
+		})
+		// this.state = ;
 		// this.handleClick=this.handleClick.bind(this)
 	}
 
 	render(){
 		return (
-				<button onClick={this.props.handleClick}>{this.state.text}</button>
+				<button value={this.props.text} onClick={this.props.handleClick}>{this.props.text}</button>
 			)
+	}
+
+	componentDidMount(){
+		this.setState( {
+			text:this.props.text,
+			value:this.props.value
+		});
 	}
 
 
